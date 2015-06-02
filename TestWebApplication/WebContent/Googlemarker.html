@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Illizi, Algeria - Satellite View, Maps, and Street View (if available)</title>
+<meta charset="UTF-8">
+
+<meta name="description" content="Satellite View of the Area around Illizi, Algeria. Includes maps, street view (if available) and ability to measure distance and area using a Google map." />
+<meta name="keywords" content="satellite view, map, street view, Illizi, Algeria, measure, measure distance, measure area, street image, satellite image, terrain map, directions" />
+<meta name="robots" content="index, follow" />
+
+<link href="/screen.css" type="text/css" rel="stylesheet" media="screen"/>
+<link href="/print.css" type="text/css" rel="stylesheet" media="print"/>
+
+<link rel="apple-touch-icon" sizes="57x57" href="/apple114.png" />
+<link rel="apple-touch-icon" sizes="114x114" href="/apple114.png" />
+<link rel="apple-touch-icon" sizes="72x72" href="/apple144.png" />
+<link rel="apple-touch-icon" sizes="144x144" href="/apple144.png" />
+
+<meta name="apple-mobile-web-app-capable" content="yes" />
+
+<script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+<script type="text/javascript">
+//<![CDATA[
+var map;
+var ll=null;
+var zoom=17;
+var lM='t';
+var marker;
+var t=encodeURI("Illizi, Algeria");
+
+var ls='';
+var lm='';
+var ld='';
+var lgs='';
+var lgm='';
+var lgd='';
+var oll=null;
+
+function load() {
+
+ll = new google.maps.LatLng(12.622677,77.346572);
+initMap();
+
+
+}
+
+function initMap () {
+var mO = {
+scaleControl:true,
+zoom:zoom,
+zoomControl:true,
+zoomControlOptions: {style:google.maps.ZoomControlStyle.SMALL},
+center: ll,
+mapTypeId: google.maps.MapTypeId.HYBRID
+};
+map = new google.maps.Map(document.getElementById("lmain"), mO);
+google.maps.visualRefresh=true;
+marker = new google.maps.Marker({position:ll,map:map,draggable:true,title:'Marker is Draggable'});   
+google.maps.event.addListener(marker, "dragend", function(evt) {map.setCenter(evt.latLng);rgeo(evt.latLng);});
+oll=ll;
+map.setTilt(0);
+map.setCenter(ll);
+ml(ll,'Illizi, Algeria');
+}
+
+function rgeo (ll) {gC(ll);var geocoder = new google.maps.Geocoder();geocoder.geocode({'latLng':ll}, function(results, status) {if (status == google.maps.GeocoderStatus.OK) {if (results[0]){document.getElementById("rgeo").innerHTML= "<br /><p><h3>Marker Location:</h3>" + results[0].formatted_address + '<br /><br />Latitude - Longitude:<br />' + String(ll.toUrlValue()) + '<br /><br />Lat: ' + ls +  '&#176; ' + lm +  '&#39; '  + ld + '&#34;<br />Long: ' + lgs +  '&#176; ' + lgm +  '&#39; ' + lgd + '&#34;</p>';var s=results[0].formatted_address;t=encodeURI(s);if(s.length > 30){s=s.substring(0,27)+"...";}document.getElementById("h1t").innerHTML='<h1>'+s+'</h1>';if (map.getZoom() < 17){map.setZoom(17);}}}});}
+function ml (ll,addr) {gC(ll);document.getElementById("rgeo").innerHTML= "<br /><p><h3>Marker Location:</h3>" + addr + '<br /><br />Latitude - Longitude:<br />' + String(ll.toUrlValue()) + '<br /><br />Lat: ' + ls +  '&#176; ' + lm +  '&#39; '  + ld + '&#34;<br />Long: ' + lgs +  '&#176; ' + lgm +  '&#39; ' + lgd + '&#34;</p>';if(addr.length > 30){addr=addr.substring(0,27)+'...';}document.getElementById('h1t').innerHTML='<h1>'+addr+'</h1>';}
+function dto(){c=String(marker.getPosition().toUrlValue());var dir="/?r=directions&t=" +c;location.href=dir;}
+function dfrom(){c=String(marker.getPosition().toUrlValue());var dir="/?r=directions&f=" +c;location.href=dir;}
+function makelink(){var t1=String(map.getCenter().toUrlValue());var t2="<strong>http://www.satelliteview.co?e=" + t1 + ":0:" + t + ":map:0</strong>";document.getElementById("linkhere").innerHTML=t2;}
+function centerRed(){var mll=map.getCenter();marker.setPosition(mll);}
+function reset(){map.setCenter(oll);marker.setPosition(oll);document.getElementById('rgeo').innerHTML= '<br /><p><h3>Marker Location:</h3>Illizi, Algeria</p>';document.getElementById('h1t').innerHTML= '';}
+function sD()
+{
+var cW = document.documentElement.clientWidth;
+var cH = document.documentElement.clientHeight;
+var c_H = 600;
+var mw = cW.toString() + 'px';
+var c_W = cW-20;
+var mc_w = c_W.toString() + 'px';
+var c_M = cW-415;
+var mc_m = c_M.toString() + 'px';
+if (cH > 780 )
+{
+var c_H = cH - 180;
+}
+var mc_h = c_H.toString() + 'px';
+document.getElementById('n').style.width = mw;
+document.getElementById('m').style.width = mw;
+document.getElementById('c').style.width = mc_w;
+document.getElementById('cm').style.width = '200px';
+document.getElementById('lmain').style.width = mc_m;
+document.getElementById('lmain').style.height = mc_h;
+}
+
+function gC(ll){
+var latA = Math.abs(Math.round(ll.lat() * 1000000.));
+var lonA = Math.abs(Math.round(ll.lng() * 1000000.));
+if(ll.lat() < 0)
+{
+	var tls = '-' + Math.floor((latA / 1000000)).toString();
+}
+else
+{
+	var tls = Math.floor((latA / 1000000)).toString();
+}
+var tlm = Math.floor(((latA/1000000) - Math.floor(latA/1000000)) * 60).toString();
+var tld = ( Math.floor(((((latA/1000000) - Math.floor(latA/1000000)) * 60) - Math.floor(((latA/1000000) - Math.floor(latA/1000000)) * 60)) * 100000) *60/100000 ).toString();
+ls = tls.toString();
+lm = tlm.toString();
+ld = tld.toString();
+
+if(ll.lng() < 0)
+{
+  var tlgs = '-' + Math.floor((lonA / 1000000)).toString();
+}
+else
+{
+	var tlgs = Math.floor((lonA / 1000000)).toString();
+}
+var tlgm = Math.floor(((lonA/1000000) - Math.floor(lonA/1000000)) * 60).toString();
+var tlgd = ( Math.floor(((((lonA/1000000) - Math.floor(lonA/1000000)) * 60) - Math.floor(((lonA/1000000) - Math.floor(lonA/1000000)) * 60)) * 100000) *60/100000 ).toString();
+lgs = tlgs.toString();
+lgm = tlgm.toString();
+lgd = tlgd.toString();
+
+}
+
+//]]>
+</script>
+
+
+
+<script type="text/javascript">
+//<![CDATA[
+function mapbtn(){var c=String(map.getCenter().toUrlValue());var str="/?e=" + c + ":0:" + t + ":map:1";location.href=str;}
+function svbtn(){var c=String(map.getCenter().toUrlValue());var str="/?e=" + c + ":0:" + t + ":sv:1";location.href=str;}
+function msbtn(){var c=String(map.getCenter().toUrlValue());var str="/?e=" + c + ":0:" + t + ":measure:0";location.href=str;}
+function rectbtn(){var c=String(map.getCenter().toUrlValue());var str="/?e=" + c + ":0:" + t + ":rectangle:0";location.href=str;}
+//]]>
+</script>
+
+
+
+
+</head>
+<body onload="sD();load();" onresize="sD();">
+<div id="page">
+
+<div id="tc">
+
+<div id="t">
+<div id="tl"><a href="/">SatelliteView.co</a></div>
+
+<div id="ts">
+<form action="/"><p><input type="text" size="25" name="place" value="Enter Address or Place" onfocus="if (this.value == 'Enter Address or Place'){this.value='';}"/>&nbsp;&nbsp;<input type="submit" value=" Go "/></p></form>
+</div>
+
+</div>
+</div>
+
+<div id="nc">
+<div id="n">
+
+<div id="nlc">
+<ul class="nbc">
+<li class="nb"><a href="/">Home</a></li>
+
+<li class="nbs"><a href="javascript:mapbtn()">Satellite View</a></li>
+
+<li class="nb"><a href="javascript:svbtn()">Street View</a></li>
+
+<li class="nb"><a href="javascript:msbtn()">Measure</a></li>
+
+<li class="nb"><a href="javascript:rectbtn()">Rectangle Tool</a></li>
+
+</ul>
+</div>
+
+<div id="nt"><div id="h1t"><h1>Illizi, Algeria</h1></div></div>
+</div>
+</div>
+
+<div id="m">
+
+<div id="c">
+<div id="bc"><a href="/">Home</a> &raquo; Illizi, Algeria - Satellite View, Maps, and Street View (if available)</div>
+
+<span class="cbc"></span>
+
+<table class="nopad">
+<tr class="aligntop">
+<td>
+<div id="cl">
+<div class="a4">
+<script async src="//pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+<!-- SatelliteView_160x600 -->
+<ins class="adsbygoogle"
+     style="display:inline-block;width:160px;height:600px"
+     data-ad-client="ca-pub-0418728868848218"
+     data-ad-slot="3755083406"></ins>
+<script>
+(adsbygoogle = window.adsbygoogle || []).push({});
+</script>
+</div>
+</div>
+</td>
+<td>
+<div id="cm">
+
+
+<p>To display the address and latitude/longitude of a location on the map drag the red marker icon to the appropriate location. Use <strong>Center Red Marker</strong> to retreive the red marker.</p>
+<p class="center">
+<strong>Driving Directions</strong><br /><a href='javascript:dto()'>To Here</a> - <a href='javascript:dfrom()'>From Here</a>
+</p>
+<div id="rgeo"></div>
+<br />
+<p class="center"><input type="button" value="Center Red Marker" onclick="centerRed()"> &nbsp; <input type="button" value="Reset" onclick="reset()"></p>
+</div>
+</td>
+<td>
+<div id="cr">
+<div id="lmain"></div>
+<p class="center">
+<a href='javascript:makelink()'>Show me the URL of this page so that I can make a link to it!</a>
+</p>
+<div id="linkhere"></div>
+</div>
+</td>
+</tr></table>
+
+</div>
+
+</div>
+
+<div id="bcnt">
+<div id="b">
+<p class="center">
+Copyright &copy; SatelliteView.co 2014 - <a href="/?r=f&amp;st=t">Terms of Use</a> - <a href="/?r=f&amp;st=c">Credits and Disclaimers</a> - <a href="/?r=f&amp;st=f">FAQ</a> - <a href="/?r=f&amp;st=p">Privacy  Policy</a>
+<br />
+Maps are provided by <a href="http://www.google.com">Google</a>. SatelliteView.co is not affiliated with Google.
+</p>
+</div>
+<br />
+
+</div>
+</div>
+
+
+<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-4248878-43']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+</body>
+</html>
